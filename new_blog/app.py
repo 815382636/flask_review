@@ -21,21 +21,23 @@ def index():
 @app.route('/comment/', methods=['POST'])
 @login_required
 def comment():
-    content =request.form.get('content')
-    question_id =request.form.get("question_id")
-    comment =Comment(content=content)
-    user_id =session.get("user_id")
-    user=User.query.filter(User.id ==user_id).first()
-    comment.author =user
-    question =Question.query.filter(Question.id ==question_id).first()
-    comment.question =question
+    content = request.form.get('content')
+    question_id = request.form.get("question_id")
+    comment = Comment(content=content)
+    user_id = session.get("user_id")
+    user = User.query.filter(User.id == user_id).first()
+    comment.author = user
+    question = Question.query.filter(Question.id == question_id).first()
+    comment.question = question
     db.session.add(comment)
     db.session.commit()
-    return redirect(url_for('detail',question_id=question_id))
+    return redirect(url_for('detail', question_id=question_id))
 
-@app.route('/detail/<question_id>')
+
+@app.route('/detail/<int:question_id>')
 def detail(question_id):
     question = Question.query.filter(Question.id == question_id).first()
+    q = Question.query.pagenate(page = 5,)
     return render_template('detail.html', question=question)
 
 

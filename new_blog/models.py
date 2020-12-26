@@ -9,6 +9,9 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
+    def __repr__(self):
+        return f'{self.id}:{self.username}'
+
 
 class Question(db.Model):
     __tablename__ = 'question'
@@ -28,6 +31,6 @@ class Comment(db.Model):
     content = db.Column(db.Text, nullable=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    question = db.relationship('Question', backref=db.backref('comments',order_by=id.desc))
+    question = db.relationship('Question', backref=db.backref('comments', order_by=id.desc))
     author = db.relationship('User', backref=db.backref('comments'))
     create_time = db.Column(db.DateTime(), default=datetime.now)
