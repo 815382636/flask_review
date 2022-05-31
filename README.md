@@ -1,5 +1,5 @@
 # flask_review
-a blog demo with flask
+a test blog demo with flask
 
 #项目启动
 -   cd new_blog
